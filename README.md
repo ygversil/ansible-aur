@@ -37,6 +37,10 @@ Currently, we support the following AUR helpers:
    - aur: name=yturl state=absent
      [...]
 
+   # Remove with dependencies
+   - aur: name=yturl state=absent cascade=true
+     [...]
+
    # Remove recursively (can also be done with the pacman resource)
    - aur: name=yturl state=absent recurse=true
      [...]

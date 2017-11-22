@@ -33,7 +33,7 @@ def install_packages(module, package_name, tool):
     )
 
 
-def remove_packages(module, package_name, recurse, nosave):
+def remove_packages(module, package_name, cascade, recurse, nosave):
     if not package_installed(module, package_name):
         module.exit_json(
             changed=False,
@@ -41,6 +41,9 @@ def remove_packages(module, package_name, recurse, nosave):
         )
 
     options = '-R'
+
+    if cascade:
+        options += 'c'
 
     if nosave:
         options += 'n'
@@ -71,6 +74,10 @@ def main():
                 'default': 'pacaur',
                 'choices': ['pacaur', 'yaourt'],
             },
+            'cascade': {
+                'default': False,
+                'type': 'bool',
+            },
             'recurse': {
                 'default': False,
                 'type': 'bool',
@@ -87,8 +94,8 @@ def main():
     if params['state'] == 'present':
         install_packages(module, params['name'], params['tool'])
     elif params['state'] == 'absent':
-        remove_packages(module, params['name'], params['recurse'],
-                        params['nosave'])
+        remove_packages(module, params['name'], params['cascade'],
+                        params['recurse'], params['nosave'])
 
 
 if __name__ == '__main__':
