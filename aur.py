@@ -72,7 +72,7 @@ def main():
                 'choices': ['pacaur', 'yaourt'],
             },
             'recurse': {
-                'default': True,
+                'default': False,
                 'type': 'bool',
             },
             'nosave': {
